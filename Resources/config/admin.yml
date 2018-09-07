@@ -1,0 +1,33 @@
+services:
+    app.admin.form:
+        class: Builder\FormBundle\Admin\F_FormAdmin
+        arguments: [~, Builder\FormBundle\Entity\F_Form, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Site", label: "Formulaires" }
+        public: true
+
+    app.admin.form_field:
+        class: Builder\FormBundle\Admin\F_FormFieldAdmin
+        arguments: [~, Builder\FormBundle\Entity\F_FormField, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Site", label: "Lien champs-formulaire" }
+        public: true
+    app.admin.form_field_rights:
+        class: Builder\FormBundle\Admin\F_FormFieldRightsAdmin
+        arguments: [~, Builder\FormBundle\Entity\F_FormFieldRights, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Site", show_in_dashboard: false}
+        public: true
+    app.admin.field:
+        class: Builder\FormBundle\Admin\F_FieldAdmin
+        arguments: [~, Builder\FormBundle\Entity\F_Field, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Site", label: "Champs" }
+        public: true
+        
+    app.admin.field_type:
+        class: Builder\FormBundle\Admin\F_FieldTypeAdmin
+        arguments: [~, Builder\FormBundle\Entity\F_FieldType, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Site", label: "Type de champs" }
+        public: true

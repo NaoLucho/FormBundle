@@ -1,0 +1,11 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% if value is not null %}
+        {% for formfield in value %}
+            <div>
+                {{formfield.position}} | {{formfield.field.property}}: <a href="{{ path('admin_builder_form_f_formfield_edit', {id: formfield.id}) }}">{{formfield.field.label}}</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

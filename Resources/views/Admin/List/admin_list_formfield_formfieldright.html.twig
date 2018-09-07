@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% if value is not null %}
+        {% for formfieldright in value %}
+            <div>{{formfieldright.rights.name}}: {{formfieldright.mode}}</div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

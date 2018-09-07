@@ -1,0 +1,14 @@
+{% block file_widget %}
+    {% spaceless %}
+        {% set type = type|default('file') %}
+        {% set subject =  form.parent.vars.value %}
+        {% if subject and subject.id and "Pdf" in _context.id %}
+            <a href="{{ vich_uploader_asset(subject, "file") }}">{{subject.fileName}}</a>
+        {% else %}
+            <input class="imgUpload" type="{{ type }}" {{ block('widget_attributes') }} />
+            {% if subject and subject.id and attribute(_context.subject, name|replace({ ('File'): 'Name' })) is defined  %}
+                <img src="{{ asset(vich_uploader_asset(subject, name)) }}" width="200" />
+            {% endif %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
