@@ -40,12 +40,17 @@ class FormBuilder
         
         //$formMapper->with('Section');
         if ($f_form != null) {
-
-            $metadata = $em->getClassMetadata($f_form->getEntity());
-            //dump($metadata);
-            $docReader = new AnnotationReader();
-            $reflect = new \ReflectionClass($f_form->getEntity());
-            //dump($reflect);
+            //dump($f_form);
+            $metadata = null; $docReader = null; $reflect = null;
+            if($f_form->getEntity() !== "NO")
+            {
+                $metadata = $em->getClassMetadata($f_form->getEntity());
+                //dump($metadata);
+                $docReader = new AnnotationReader();
+                $reflect = new \ReflectionClass($f_form->getEntity());
+                //dump($reflect);
+            }
+            
             foreach ($f_form->getFormFields() as $ffield) {
 
                 //initialisation pour chaque champ
@@ -60,13 +65,16 @@ class FormBuilder
                 $type = null;
 
                 //verifier que la property existe:
-                if (!$reflect->hasProperty($field->getProperty())) {
+                if ($reflect != null and !$reflect->hasProperty($field->getProperty())) {
                     //dump($f_form->getEntity().' does not have property:'.$field->getProperty());
                     // continue;
                 }
-
-                //recupérer les informations relatives à la property
-                $docInfos = $docReader->getPropertyAnnotations($reflect->getProperty($field->getProperty()));
+                $docInfos = null;
+                if($docReader != null and $reflect != null){
+                    //recupérer les informations relatives à la property
+                    $docInfos = $docReader->getPropertyAnnotations($reflect->getProperty($field->getProperty()));
+                }
+                
                 //dump($docInfos[0]);
 
                 //VERIFIER LES DROITS =>desactivé pour le moment
@@ -79,7 +87,7 @@ class FormBuilder
 
                     //If endwith ToMany:
                     //Ajout dynamic de contraints (@Assert) dans le group dynamic
-                    if (strstr(get_class($docInfos[0]), 'ToMany') === "ToMany") {
+                    if ($docInfos != null and strstr(get_class($docInfos[0]), 'ToMany') === "ToMany") {
                         //dump($ffield);
                         //if($field->getProperty()!="ownersAnim"){
                             //is arrayCollection
