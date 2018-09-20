@@ -1,0 +1,13 @@
+{{ form_start(form, {'attr': {'class': 'inputs-line w-100', 'novalidate': 'novalidate'} }) }}
+      <div class="step active">
+        {% if not form.vars.valid %}
+          <div class="alert alert-danger">
+            Formulaire invalide, veuillez corriger les champs indiqués par <span class="glyphicon glyphicon-exclamation-sign">
+
+          </div>
+        {% endif %}
+
+        {{ form_widget(form) }}
+{{dump(form)}}
+        </div>
+      {{ form_end(form) }}
