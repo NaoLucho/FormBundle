@@ -868,7 +868,7 @@ class FormBuilder
                             //dump($options);
                         }
                         if ($field->getFieldType()->getComponent() === "ImageArray") {
-                            $options['entry_type'] = 'AdminBundle\Form\PartnersForm';
+                            $options['entry_type'] = 'AdminBundle\Form\ImagesForm';
                             $options['entry_options'] = array('label' => false);
                             $options['allow_add'] = true;
                             $options['allow_delete'] = true;
@@ -878,7 +878,7 @@ class FormBuilder
                                 'class' => $options['label_attr']['class'] . ' col-xs-12'
                             ));
 
-                            $formMapper->add('partners', PdfsType::class, $options);
+                            $formMapper->add($field->getProperty(), FileArrayType::class, $options);
                         }
                         if ($field->getFieldType()->getComponent() === "FileArray") {
                             $options['entry_type'] = 'AdminBundle\Form\PdfsForm';
