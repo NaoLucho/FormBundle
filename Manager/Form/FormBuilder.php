@@ -2,7 +2,7 @@
 namespace Builder\FormBundle\Manager\Form;
 
 use Doctrine\ORM\EntityRepository;
-
+use Sonata\Form\Type\BooleanType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -29,6 +29,7 @@ use Sonata\CoreBundle\Form\Type\DateTimePickerType;
 // use AdminBundle\Form\Type\LocalisationType;
 
 use AdminBundle\Form\Type\FileArrayType;
+use Doctrine\DBAL\Types\BooleanType as TypesBooleanType;
 
 //UTILS pour builder
 class FormBuilder
@@ -36,6 +37,7 @@ class FormBuilder
 
     static function createForm($f_form, $formMapper, $user, $em, $mode = null) //, $entity = null
     {
+        // dump($f_form);
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
         
         //$formMapper->with('Section');
@@ -373,6 +375,14 @@ class FormBuilder
                         $type = TextType::class;
                         break;
 
+                    case "boolean":
+                        // dump($field);
+                        $type = null;
+                        $options['label'] = ' ' . $field->getLabel(); // delete ':'
+                        // $options['transform'] = true;
+                        // $options['translation_domain'] = "SonataAdminBundle";
+                        break;
+
                     // case "image":
                     // case "file":
                     // case "TableObjectivesType"://SPECIFIC ADD FIELD TableObjectivesType extend CollectionType of form P_ProgramObjectiveType
@@ -468,7 +478,7 @@ class FormBuilder
                                 
                             // }
                             $filterparams = explode("=", $listparams[1]);
-                            $filterProperty;
+                            $filterProperty = null;
                             $filterPropertyAttribut = null;
                             if ($filterparams[0]) //owner.id
                             {
@@ -556,7 +566,7 @@ class FormBuilder
                 //DEFAULT VALUE: utilisateur courant
                 
                 //DUMP field:
-                if ($field->getProperty() === 'propertytodump') {
+                if ($field->getProperty() === 'QUELLE PROPERTY?') {
                     dump($field->getProperty());
                     dump($type);
                     dump($options);
@@ -565,7 +575,9 @@ class FormBuilder
                 //ADD FIELD TO FORM
                 if ($noError) {
                     if ($usebuilder) {
-
+                        // dump($field);
+                        // dump($type);
+                        // dump($options);
                         $formMapper->add($field->getProperty(), $type, $options);
 
                     } else {
